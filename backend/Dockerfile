@@ -1,10 +1,12 @@
-FROM python:3
+FROM python:3.7
 
-WORKDIR /usr/src/app
+COPY requirements.txt /tmp/
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN useradd --create-home appuser
+WORKDIR /home/appuser
+USER appuser
 
-COPY . .
+COPY app.py .
 
 CMD [ "python", "./app.py" ]
