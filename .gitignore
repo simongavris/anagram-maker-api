@@ -94,6 +94,7 @@ venv.bak/
 
 # vim
 *.swp
+*.swo
 
 # Spyder project settings
 .spyderproject
