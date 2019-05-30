@@ -1,20 +1,23 @@
-This is a sample python flask API that stores requests in a database.
+## This is a sample python flask API that stores requests in a database.
 
 Build:
+
 	docker build -t anagram-maker .
 
 Run:
+	
 	docker run -p 5000:5000 anagram-maker
 
-Build&Run(docker-compose) - recommended:
+### Build&Run(docker-compose) - recommended:
 starts also a database container 
+    
     docker-compse up -d
 
 
 Environment:
 set environment variables in docker-compose file
 
-How to use API:
+### How to use API:
     
 Create anagram from word:
 	curl localhost:5000/create?word=myword
