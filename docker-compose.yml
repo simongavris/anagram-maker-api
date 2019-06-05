@@ -1,6 +1,14 @@
 version: '3.3'
 
 services:
+    frontend:
+        depends_on:
+            - app
+        build:
+            context: ./frontend/
+        restart: unless-stopped
+        networks:
+            - intern
     app:
         depends_on:
             - db
@@ -14,7 +22,8 @@ services:
             DBUSER: postgres
             DBPASSWORD: secret
         networks:
-            db:
+            - intern
+            - db
 
     db:
         image: postgres:11
@@ -28,4 +37,5 @@ services:
             
 networks:
     db:
+    intern:
 

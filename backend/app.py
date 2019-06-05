@@ -64,13 +64,25 @@ def check_anagram_call():
         return abort(400)
     return json.dumps(check_anagram(con, anagram, word))
 
-@bp.route('/create')
+@bp.route('/create', methods=('GET', 'POST'))
 def create_anagram_call():
-    word = request.args.get('word').lower()
-    anagram = scramble_word(word) 
-    if check_existing(con, word, anagram):
-        write_db(con, anagram, word)
-    return anagram
+    if request.method == 'GET':
+        word = request.args.get('word').lower()
+        anagram = scramble_word(word) 
+        if check_existing(con, word, anagram):
+           write_db(con, anagram, word)
+        return anagram
+    if request.method == 'POST':
+        if request.is_json:
+            words = request.get_json()["words"]
+            anagrams = []
+            for word in words:
+                anagram = scramble_word(word)
+                if check_existing(con, word, anagram):
+                    write_db(con, anagram, word)
+                anagrams.append(anagram)
+            return json.dumps(anagrams)   
+        return json.dumps(false)
 
 @bp.route('/get')
 def get_anagram_call():

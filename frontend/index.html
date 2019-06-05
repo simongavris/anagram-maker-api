@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <script src="script.js"></script>
+</head>
 <body>
 
-<h2>HTML Forms</h2>
+<h2>Anagram-App</h2>
 
 <form action="/action_page.php">
   Input:<br>
   <input type="text" name="input" value="input">
-  <input type="submit" value="Create">
-  <input type="submit" value="Check">
+  <button type="button" onclick="userAction()" id="btn_create">Create</button> 
+  <button type="button" id="btn_check">Check</button> 
   <p id="result"></p>
 </form> 
 
