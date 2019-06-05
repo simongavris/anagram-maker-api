@@ -77,6 +77,7 @@ def create_anagram_call():
             words = request.get_json()["words"]
             anagrams = []
             for word in words:
+                word = word.lower()
                 anagram = scramble_word(word)
                 if check_existing(con, word, anagram):
                     write_db(con, anagram, word)
