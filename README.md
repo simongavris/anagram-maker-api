@@ -20,3 +20,18 @@ Get random anagram:
 check if word belongs to anagram:
     curl "localhost:5000/check?word=myword&anagram=yrdwom"
 you need to use quotation marks, otherwise curl will cut everything after '&'
+
+#### create anagram:
+##### single:
+
+    GET: /api/create?word=apfelbaum
+
+##### multiple:
+
+    POST: api/create
+
+    body: 
+    {
+	"words": ["tischbein", "anemone", "verbrechen", "raubkopie"]
+    } 
+
