@@ -1,10 +1,11 @@
-from flask import Flask, request, abort
+from flask import Flask, request, abort, Blueprint
 import psycopg2 as psy
 import datetime
 import os
 import random
 import sys
 import json
+
 
 con = psy.connect(
         host=os.environ.get("DBHOST", "db"),
@@ -52,9 +53,10 @@ def get_random_anagram(connection):
     cur.close
     return random.choice(result)[0]
 
-app = Flask(__name__)
 
-@app.route('/check')
+bp = Blueprint('api', __name__, url_prefix='/api')
+
+@bp.route('/check')
 def check_anagram_call():
     anagram = request.args.get('anagram', default = "", type = str)
     word = request.args.get('word', default = "", type = str)
@@ -62,18 +64,20 @@ def check_anagram_call():
         return abort(400)
     return json.dumps(check_anagram(con, anagram, word))
 
-@app.route('/create')
+@bp.route('/create')
 def create_anagram_call():
-    word = request.args.get('word')
+    word = request.args.get('word').lower()
     anagram = scramble_word(word) 
     if check_existing(con, word, anagram):
         write_db(con, anagram, word)
     return anagram
 
-@app.route('/get')
+@bp.route('/get')
 def get_anagram_call():
     return get_random_anagram(con)
 
+app = Flask(__name__)
+app.register_blueprint(bp)
 if __name__ == '__main__':
     create_table(con)
     app.run(debug=True, host='0.0.0.0')
