@@ -1,10 +1,14 @@
-const userAction = async () => {
-  const response = await fetch('http://localhost:5000/api/get',
-  {
-    mode: 'no-cors',
-    method: 'get'
-  });
-  const myJson = await response;//.json(); //extract JSON from the http response
-  console.log(myJson);
-  // do something with myJson
+function call() {
+var request = new XMLHttpRequest()
+
+// Open a new connection, using the GET request on the URL endpoint
+request.open('GET', 'http://localhost:5000/api/get', true)
+
+request.onload = function () {
+  // Begin accessing JSON data here
+  }
+}
+
+// Send request
+request.send()
 }

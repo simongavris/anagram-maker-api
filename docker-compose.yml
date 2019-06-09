@@ -6,6 +6,8 @@ services:
             - app
         build:
             context: ./frontend/
+        ports:
+            - "8080:80"
         restart: unless-stopped
         networks:
             - intern
